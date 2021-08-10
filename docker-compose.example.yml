@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  mongo:
+    container_name: mongo
+    image: mongo:5.0.2
+    volumes:
+      - ./db/:/data/db/
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    networks:
+      - localhost
+    restart: always
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express:1.0.0-alpha
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://${USERNAME}:${PASSWORD}@mongo:27017
+      VIRTUAL_HOST: mongo.localhost
+      VIRTUAL_PORT: 8081
+    networks:
+      - localhost
+    restart: always
+networks:
+  localhost:
+    external: true
