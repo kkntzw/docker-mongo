@@ -5,11 +5,15 @@ services:
     image: mongo:5.0.2
     volumes:
       - ./db/:/data/db/
+      - ./conf/:/etc/mongo/
+      - ./log/:/var/log/mongodb/
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      TZ: Asia/Tokyo
     networks:
       - localhost
+    command: --config /etc/mongo/mongod.yml
     restart: always
   mongo-express:
     container_name: mongo-express
