@@ -56,3 +56,4 @@ docker-compose exec mongo mongosh --host mongo --port 27017 --username ${ユー�
 
 ### 他コンテナから利用する
 環境変数の `ME_CONFIG_MONGODB_URL` の値をURIとして指定する。
+`mongo:27017` をURIとして指定する。
