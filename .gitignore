@@ -1,8 +1,5 @@
-# Data
-db
+# Environment
+.env
 
-# Log
+# Logging
 log
-
-# Docker
-docker-compose.yml

@@ -1,0 +1,38 @@
+services:
+  mongo:
+    container_name: mongo
+    command:
+      - --config
+      - /etc/mongo/mongod.yml
+    environment:
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      TZ: Asia/Tokyo
+    image: mongo:5.0.7
+    networks:
+      - localhost
+    restart: always
+    volumes:
+      - ./conf/:/etc/mongo/
+      - ./log/:/var/log/mongodb/
+      - mongo-volume:/data/db/
+
+  mongo-express:
+    container_name: mongo-express
+    depends_on:
+      - mongo
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_ROOT_USERNAME}:${MONGO_ROOT_PASSWORD}@mongo:27017
+      VIRTUAL_HOST: mongo-express.localhost
+    image: mongo-express:1.0.0-alpha
+    networks:
+      - localhost
+    restart: always
+
+networks:
+  localhost:
+    external: true
+
+volumes:
+  mongo-volume:
+    name: mongo-volume
